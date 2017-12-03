@@ -10,34 +10,51 @@ public class PlayerMovement : MonoBehaviour
 	private Transform Linecast1, Linecast2;
 
 	private Rigidbody2D RB;
-	RaycastHit2D LineBoi;
+    private Transform myTrans;
+    RaycastHit2D LineBoi;
 
-	void Start ()
+	void Start()
 	{
 		RB = GetComponent<Rigidbody2D>();
-	}
+        myTrans = GetComponent<Transform>();
+    }
 	
 
-	void Update ()
+	void Update()
 	{
-		LineBoi = Physics2D.Linecast (Linecast1.position, Linecast2.position);
+        LineBoi = Physics2D.Linecast (Linecast1.position, Linecast2.position);
 		move ();
 		jump ();
-		print (RB.velocity);
+		//print (RB.velocity);
+
 		//drag
-		RB.AddForce (Vector2.right * (RB.velocity.x - 4) ,ForceMode2D.Impulse);
-		print (RB.velocity.x);
-	}
+        if(LineBoi.collider != null)
+        {
+            RB.AddForce(Vector2.right * Mathf.Tan(RB.velocity.x * 0.01f) * -8f, ForceMode2D.Impulse);
+        }
+        else
+        {
+            RB.AddForce(Vector2.right * Mathf.Tan(RB.velocity.x * 0.005f) * -8f, ForceMode2D.Impulse);
+        }
+    }
 
 	void move()
 	{
-		if (LineBoi.collider != null)
-		{
-			RB.AddForce (Vector2.right* Input.GetAxisRaw ("Horizontal") * Time.deltaTime * MoveSpeed);
-		}else
-		{
-			RB.AddForce (Vector2.right* Input.GetAxisRaw ("Horizontal") * Time.deltaTime * MoveSpeed/2f);
-		}
+        if(myTrans.position.x > 0)
+        {
+            if (LineBoi.collider != null)
+            {
+                RB.AddForce(Vector2.right * Input.GetAxisRaw("Horizontal") * Time.deltaTime * MoveSpeed);
+            } else
+            {
+                RB.AddForce(Vector2.right * Input.GetAxisRaw("Horizontal") * Time.deltaTime * MoveSpeed / 2f);
+            }
+        }
+        else
+        {
+            //transform.position = new Vector3(0.001f,myTrans.position.y,myTrans.position.z);
+            RB.AddForce(Vector2.right * ((RB.velocity.x * -1)+1f),ForceMode2D.Impulse);
+        }
 	}
 
 	void jump()
