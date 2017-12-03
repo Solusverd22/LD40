@@ -221,6 +221,7 @@
   <ItemGroup>
     <Compile Include="Assets\CameraBoundaries.cs" />
     <Compile Include="Assets\CameraFollow.cs" />
+    <Compile Include="Assets\GunScript.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\CircleObject.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GameObjectExtensions.cs" />
