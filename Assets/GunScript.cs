@@ -29,20 +29,21 @@ public class GunScript : MonoBehaviour {
         angle = Mathf.Rad2Deg * angle;
         myTrans.eulerAngles = new Vector3(0, 0, angle);
 
-        if(angle < -90 || angle > 90)
-        {
-            GunTrans.localScale = new Vector2(1, -1);
-        }
-        else
-        {
-            GunTrans.localScale = new Vector2(1, 1);
-        }
-        Debug.Log(angle);
+        //needed to flip gun
+        //if(angle < -90 || angle > 90)
+        //{
+        //    GunTrans.localScale = new Vector2(1, -1);
+        //}
+        //else
+        //{
+        //    GunTrans.localScale = new Vector2(1, 1);
+        //}
+        //Debug.Log(angle);
 
         var emission = HoneyParticles.emission;
         if (Input.GetButton("Fire1"))
         {
-            emission.rateOverTime = 50;
+            emission.rateOverTime = 100;
             Player.SendMessage("FireGun", angle);
 
         }

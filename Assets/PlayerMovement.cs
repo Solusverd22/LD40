@@ -12,11 +12,13 @@ public class PlayerMovement : MonoBehaviour
 	private Rigidbody2D RB;
     private Transform myTrans;
     RaycastHit2D LineBoi;
+    Animator anim;
 
 	void Start()
 	{
 		RB = GetComponent<Rigidbody2D>();
         myTrans = GetComponent<Transform>();
+        anim = GetComponentInChildren<Animator>();
     }
 	
 
@@ -33,6 +35,18 @@ public class PlayerMovement : MonoBehaviour
 
 	void move()
 	{
+        //animation
+        if(Input.GetAxisRaw("Horizontal") > 0)
+        {
+            myTrans.localScale = new Vector2(1, 1);
+        }
+        if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            myTrans.localScale = new Vector2(-1, 1);
+        }
+        anim.SetBool("moving", Input.GetButton("Horizontal"));
+
+        //physics
         if(myTrans.position.x > 0)
         {
             if (LineBoi.collider != null && !LineBoi.collider.IsTouchingLayers(2))
