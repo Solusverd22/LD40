@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class GunScript : MonoBehaviour {
 
+    [SerializeField]
+    private float HoneyOffLerp;
+    [SerializeField]
+    private ParticleSystem HoneyParticles;
+    private GameObject Player;
     private Transform myTrans;
     private Transform GunTrans;
+    
     Camera cam;
 
 	void Start ()
@@ -13,7 +19,8 @@ public class GunScript : MonoBehaviour {
         GunTrans = GetComponentInChildren<Transform>();
         myTrans = GetComponent<Transform>();
         cam = Camera.main;
-	}
+        Player = myTrans.parent.gameObject;
+    }
 	void Update ()
     {
         //float angle = Vector2.Angle(myTrans.position, cam.ScreenToWorldPoint(Input.mousePosition));
@@ -31,5 +38,18 @@ public class GunScript : MonoBehaviour {
             GunTrans.localScale = new Vector2(1, 1);
         }
         Debug.Log(angle);
+
+        var emission = HoneyParticles.emission;
+        if (Input.GetButton("Fire1"))
+        {
+            emission.rateOverTime = 50;
+            Player.SendMessage("FireGun", angle);
+
+        }
+        else
+        {
+            emission.rateOverTime = 0;
+        }
+        
     }
 }

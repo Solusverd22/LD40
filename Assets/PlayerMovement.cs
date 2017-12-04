@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 	[SerializeField]
-	private float MoveSpeed, FallSpeed, LowJumpSpeed, JumpHeight;
+	private float MoveSpeed, FallSpeed, LowJumpSpeed, JumpHeight, GunForce;
 	[SerializeField]
 	private Transform Linecast1, Linecast2;
 
@@ -28,21 +28,14 @@ public class PlayerMovement : MonoBehaviour
 		//print (RB.velocity);
 
 		//drag
-        if(LineBoi.collider != null)
-        {
-            RB.AddForce(Vector2.right * Mathf.Tan(RB.velocity.x * 0.01f) * -8f, ForceMode2D.Impulse);
-        }
-        else
-        {
-            RB.AddForce(Vector2.right * Mathf.Tan(RB.velocity.x * 0.005f) * -8f, ForceMode2D.Impulse);
-        }
+        RB.AddForce(Vector2.right * Mathf.Tan(RB.velocity.x * 0.01f) * -8f, ForceMode2D.Impulse);
     }
 
 	void move()
 	{
         if(myTrans.position.x > 0)
         {
-            if (LineBoi.collider != null)
+            if (LineBoi.collider != null && !LineBoi.collider.IsTouchingLayers(2))
             {
                 RB.AddForce(Vector2.right * Input.GetAxisRaw("Horizontal") * Time.deltaTime * MoveSpeed);
             } else
@@ -59,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
 	void jump()
 	{
-		if (Input.GetButtonDown ("Jump") && LineBoi.collider != null) 
+		if (Input.GetButtonDown ("Jump") && LineBoi.collider != null && !LineBoi.collider.IsTouchingLayers(2)) 
 		{
 			RB.AddForce (Vector2.up * JumpHeight,ForceMode2D.Impulse);
 		}
@@ -67,10 +60,22 @@ public class PlayerMovement : MonoBehaviour
 		if (RB.velocity.y < 0)
 		{
 			RB.velocity += Vector2.up * Physics2D.gravity.y * (FallSpeed - 1) * Time.deltaTime;
+            print(RB.velocity.y);
 		}
 		else if ( RB.velocity.y > 0 && !Input.GetButton ("Jump"))
 		{
 			RB.velocity += Vector2.up * Physics2D.gravity.y * (LowJumpSpeed - 1) * Time.deltaTime;
 		}
-	}
+
+        if (RB.velocity.y <= -20)
+        {
+            RB.AddForce(Vector2.up * RB.gravityScale * RB.mass, ForceMode2D.Impulse);
+        }
+    }
+
+    void FireGun(float angle)
+    {
+        var vForce = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.left;
+        RB.AddForce(vForce.normalized * GunForce,ForceMode2D.Impulse);
+    }
 }
