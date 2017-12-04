@@ -381,7 +381,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -417,7 +417,7 @@ MonoBehaviour:
   FallSpeed: 3
   LowJumpSpeed: 10
   JumpHeight: 7
-  GunForce: 1
+  GunForce: 0.3
   Linecast1: {fileID: 2098750431}
   Linecast2: {fileID: 1984595252}
 --- !u!1 &979348166

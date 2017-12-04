@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
                 RB.AddForce(Vector2.right * Input.GetAxisRaw("Horizontal") * Time.deltaTime * MoveSpeed);
             } else
             {
-                RB.AddForce(Vector2.right * Input.GetAxisRaw("Horizontal") * Time.deltaTime * MoveSpeed / 2f);
+                RB.AddForce(Vector2.right * Input.GetAxisRaw("Horizontal") * Time.deltaTime * MoveSpeed);
             }
         }
         else
@@ -57,15 +57,15 @@ public class PlayerMovement : MonoBehaviour
 			RB.AddForce (Vector2.up * JumpHeight,ForceMode2D.Impulse);
 		}
 
-		if (RB.velocity.y < 0)
-		{
-			RB.velocity += Vector2.up * Physics2D.gravity.y * (FallSpeed - 1) * Time.deltaTime;
-            print(RB.velocity.y);
-		}
-		else if ( RB.velocity.y > 0 && !Input.GetButton ("Jump"))
-		{
-			RB.velocity += Vector2.up * Physics2D.gravity.y * (LowJumpSpeed - 1) * Time.deltaTime;
-		}
+        //if (RB.velocity.y < 0)
+        //{
+        //	RB.velocity += Vector2.up * Physics2D.gravity.y * (FallSpeed - 1) * Time.deltaTime;
+        //          print(RB.velocity.y);
+        //}
+        //else if ( RB.velocity.y > 0 && !Input.GetButton ("Jump"))
+        //{
+        //	RB.velocity += Vector2.up * Physics2D.gravity.y * (LowJumpSpeed - 1) * Time.deltaTime;
+        //}
 
         if (RB.velocity.y <= -20)
         {
